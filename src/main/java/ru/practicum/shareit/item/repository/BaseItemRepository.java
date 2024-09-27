@@ -12,16 +12,15 @@ public class BaseItemRepository implements  ItemRepository {
     final HashMap<Long, Item> items;
 
     @Override
-    public Item create(Item item, long ownerId) {
+    public Item create(Item item) {
         item.setId(getId());
-        item.setOwnerId(ownerId);
         items.put(item.getId(), item);
         Item itemNew = items.get(item.getId());
         return itemNew;
     }
 
     @Override
-    public Item update(long itemId, Item updItem, long userId) {
+    public Item update(long itemId, Item updItem) {
         Item oldItem = items.get(itemId);
 
         if (updItem.getDescription() != null && !updItem.getDescription().equals(oldItem.getDescription())) {

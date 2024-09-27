@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface ItemRepository {
-    Item create(Item item, long ownerId);
+    Item create(Item item);
 
-    Item update(long itemId,Item updItem,long userId);
+    Item update(long itemId,Item updItem);
 
     void delete(long id);
 

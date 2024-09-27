@@ -15,4 +15,7 @@ public interface UserRepository {
     Optional<User> findById(long id);
 
     Collection<User> getListUserSameEmail(String email,long id);
+
+    Optional<User> getUserByEmail(String email);
+
 }

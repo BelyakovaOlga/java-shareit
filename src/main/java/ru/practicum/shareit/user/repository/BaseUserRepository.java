@@ -9,12 +9,13 @@ import java.util.*;
 @Repository
 @RequiredArgsConstructor
 public class BaseUserRepository implements UserRepository {
-    final HashMap<Long, User> users;
-
+    final HashMap<Long, User>   users;
+    final HashMap<String, User> emails;
     @Override
     public User create(User user) {
         user.setId(getId());
         users.put(user.getId(), user);
+        emails.put(user.getEmail(),user);
         return users.get(user.getId());
     }
 
@@ -23,6 +24,7 @@ public class BaseUserRepository implements UserRepository {
         User oldUser = users.get(id);
         if (userUpd.getEmail() != null && !userUpd.getEmail().equals(oldUser.getEmail())) {
             oldUser.setEmail(userUpd.getEmail());
+            emails.put(userUpd.getEmail(),userUpd);
         }
         if (userUpd.getName() != null && !userUpd.getName().equals(oldUser.getName())) {
             oldUser.setName(userUpd.getName());
@@ -34,6 +36,8 @@ public class BaseUserRepository implements UserRepository {
 
     @Override
     public void delete(long id) {
+        User user = users.get(id);
+        emails.remove(user.getEmail());
         users.remove(id);
     }
 
@@ -53,6 +57,10 @@ public class BaseUserRepository implements UserRepository {
         return resUser;
     }
 
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+       return Optional.ofNullable(emails.get(email));
+    }
     private long getId() {
         long lastId = users.values().stream()
                 .mapToLong(User::getId)

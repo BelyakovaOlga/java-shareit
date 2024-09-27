@@ -2,11 +2,11 @@ package ru.practicum.shareit.item.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
-import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
-import ru.practicum.shareit.user.services.UserValidateService;
+import ru.practicum.shareit.user.repository.UserRepository;
 
 import java.util.Collection;
 
@@ -14,40 +14,40 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class BaseItemService implements  ItemService {
     private final ItemRepository itemRepository;
-    private final ItemValidateService itemValidateService;
-    private final UserValidateService userValidateService;
+    private final UserRepository userRepository;
 
     @Override
-    public Item create(Item newItem, long ownerId) {
-        userValidateService.validateExistUser(ownerId);
-        itemValidateService.validateData(newItem);
-        return itemRepository.create(newItem, ownerId);
+    public ItemDto create(ItemDto newItemDto, long ownerId) {
+        userRepository.findById(ownerId)
+                .orElseThrow(() -> new NotFoundException("Пользователь " + ownerId + "не найден"));
+        return ItemMapper.toItemDto(itemRepository.create(ItemMapper.toItem(newItemDto,ownerId)));
     }
 
     @Override
-    public Item update(long itemId, Item itemUpd, long userId) {
-        itemValidateService.validateParms(userId);
-        userValidateService.validateExistUser(userId);
-        itemValidateService.validateExistItem(itemId);
-
-        Item itemOld = itemRepository.findById(itemId).get();
-        return itemRepository.update(itemId, itemUpd, userId);
+    public ItemDto update(long itemId, ItemDto itemUpd, long ownerId) {
+        userRepository.findById(ownerId)
+                .orElseThrow(() -> new NotFoundException("Пользователь " + ownerId + "не найден"));
+        itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("Item " + itemId + "не найден"));
+        return ItemMapper.toItemDto(itemRepository.update(itemId, ItemMapper.toItem(itemUpd,ownerId)));
     }
 
     @Override
-    public void delete(long id) {
-        itemRepository.delete(id);
+    public void delete(long itemId) {
+        itemRepository.delete(itemId);
     }
 
     @Override
-    public ItemDto findById(long id) {
-        itemValidateService.validateExistItem(id);
-        return ItemMapper.toItemDto(itemRepository.findById(id).get());
+    public ItemDto findById(long itemId) {
+        itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("Item " + itemId + "не найден"));
+        return ItemMapper.toItemDto(itemRepository.findById(itemId).get());
     }
 
     @Override
     public Collection<ItemDto> findByOwner(long ownerId) {
-        userValidateService.validateExistUser(ownerId);
+        userRepository.findById(ownerId)
+                .orElseThrow(() -> new NotFoundException("Пользователь " + ownerId + "не найден"));
         return itemRepository.findByOwner(ownerId)
                 .stream()
                 .map(ItemMapper::toItemDto)

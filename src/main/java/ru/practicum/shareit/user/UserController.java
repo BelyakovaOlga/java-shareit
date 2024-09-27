@@ -1,8 +1,10 @@
 package ru.practicum.shareit.user;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.services.UserService;
 
 @Slf4j
@@ -14,30 +16,34 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    public User get(@PathVariable long id) {
+    public UserDto get(@PathVariable long id) {
         log.info("Запрос User по id: {}", id);
-        User user = service.findById(id);
-        log.info("Возврат user: {}", user);
-        return user;
+        UserDto userDto = service.findById(id);
+        log.info("Возврат user: {}", userDto);
+        return userDto;
     }
 
     @PostMapping()
-    public User create(@RequestBody User user) {
-        log.info("Создание User: {}", user);
-        return service.create(user);
+    public UserDto create(@RequestBody @Valid UserDto userDto) {
+        log.info("==>Создание User: {}", userDto);
+        UserDto newUserDto = service.create(userDto);
+        log.info("<==Создан User: {}", userDto);
+        return newUserDto;
     }
 
     @PatchMapping("/{id}")
-    public User update(@PathVariable long id, @RequestBody User user) {
-        log.info("Обновление User: {}", user);
-        return service.update(id, user);
+    public UserDto update(@PathVariable long id, @RequestBody UserDto userDto) {
+        log.info("==>Обновление User: {}", userDto);
+        UserDto userUpdDto = service.update(id, userDto);
+        log.info("<==Обновление User: {}", userDto);
+        return userUpdDto;
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
-        log.info("Удалениее User по: {}", id);
+        log.info("==>Удалениее User по: {}", id);
         service.delete(id);
-        log.info("Успешно удален");
+        log.info("<==Успешно удален");
     }
 }
 
