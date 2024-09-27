@@ -12,6 +12,7 @@ public class ItemMapper {
                                       item.getRequest() != null ? item.getRequest().getId() : null);
         return itemDto;
     }
+
     public static Item toItem(ItemDto itemDto, long  ownerId) {
         Item item = new Item(itemDto.getId(),
                              ownerId,

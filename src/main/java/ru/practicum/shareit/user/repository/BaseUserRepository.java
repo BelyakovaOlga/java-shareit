@@ -11,6 +11,7 @@ import java.util.*;
 public class BaseUserRepository implements UserRepository {
     final HashMap<Long, User>   users;
     final HashMap<String, User> emails;
+
     @Override
     public User create(User user) {
         user.setId(getId());
@@ -59,8 +60,9 @@ public class BaseUserRepository implements UserRepository {
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-       return Optional.ofNullable(emails.get(email));
+        return Optional.ofNullable(emails.get(email));
     }
+
     private long getId() {
         long lastId = users.values().stream()
                 .mapToLong(User::getId)

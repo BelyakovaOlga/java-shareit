@@ -16,6 +16,7 @@ import java.util.Collection;
 public class ItemController {
     private final ItemService service;
     static final String userParmHeader = "X-Sharer-User-Id";
+
     @GetMapping("/{id}")
     public ItemDto get(@PathVariable long id) {
         log.info("==>Получение Item по id: {}", id);
