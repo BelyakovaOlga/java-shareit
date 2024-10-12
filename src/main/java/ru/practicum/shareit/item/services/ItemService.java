@@ -9,7 +9,7 @@ import java.util.Collection;
 
 @Service
 public interface ItemService {
-    ItemDto create(ItemDto item ,long ownerId);
+    ItemDto create(ItemDto item, long ownerId);
 
     ItemDto update(ItemDto itemUpd, long ownerId);
 

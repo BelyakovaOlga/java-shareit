@@ -18,7 +18,6 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,9 @@ public class BaseBookingService implements BookingService {
         Booking booking = getBooking(id);
         bookingRepository.delete(booking);
     }
+
     @Override
-    public OutputBookingDto create(BookingDto  bookingDto, long bookerId) {
+    public OutputBookingDto create(BookingDto bookingDto, long bookerId) {
         User booker = getUser(bookerId);
         Item item = getItem(bookingDto.getItemId());
 
@@ -52,7 +52,7 @@ public class BaseBookingService implements BookingService {
         }
         bookingDto.setBooker(booker.getId());
 
-        Booking  booking = Booking.builder()
+        Booking booking = Booking.builder()
                 .start(bookingDto.getStart())
                 .end(bookingDto.getEnd())
                 .item(item)
@@ -83,10 +83,10 @@ public class BaseBookingService implements BookingService {
     }
 
     @Override
-    public OutputBookingDto findById(long bookingId,long userId) {
-        Booking     booking = getBooking(bookingId);
-        OutputBookingDto  bookingDto;
-        Item  item = getItem(booking.getItem().getId());
+    public OutputBookingDto findById(long bookingId, long userId) {
+        Booking booking = getBooking(bookingId);
+        OutputBookingDto bookingDto;
+        Item item = getItem(booking.getItem().getId());
         if (item.getOwner().getId().equals(userId) || booking.getBooker().getId().equals(userId)) {
             bookingDto = BookingMapper.toOutputBookingDto(booking);
         } else {
@@ -97,15 +97,15 @@ public class BaseBookingService implements BookingService {
 
     @Override
     public List<OutputBookingDto> findByBookerId(long bookerId, String status) {
-        List<Booking>  listBooking = new ArrayList<>();
+        List<Booking> listBooking = new ArrayList<>();
         User booker = getUser(bookerId);
         if (BookingStatus.from(status) == null) {
             throw new ValidatetionConflict("Некорректный статус Booking");
         }
-        BookingStatus   bookingStatus = BookingStatus.from(status);
+        BookingStatus bookingStatus = BookingStatus.from(status);
         switch (bookingStatus) {
             case BookingStatus.ALL:
-                listBooking = bookingRepository.findByBooker(booker,NEWEST_FIRST);
+                listBooking = bookingRepository.findByBooker(booker, NEWEST_FIRST);
                 break;
             case BookingStatus.CURRENT:
                 listBooking = bookingRepository.findByBookerAndEndAfterAndStartBefore(booker, LocalDateTime.now(), LocalDateTime.now(), NEWEST_FIRST);
@@ -119,7 +119,7 @@ public class BaseBookingService implements BookingService {
             case BookingStatus.WAITING:
             case BookingStatus.REJECTED:
             case BookingStatus.APPROVED:
-                listBooking = bookingRepository.findByBookerAndStatusEquals(booker, status ,NEWEST_FIRST);
+                listBooking = bookingRepository.findByBookerAndStatusEquals(booker, status, NEWEST_FIRST);
                 break;
 
         }
@@ -130,12 +130,12 @@ public class BaseBookingService implements BookingService {
 
     @Override
     public List<OutputBookingDto> findByOwnerId(long ownerId, String status) {
-        List<Booking>  listBooking = new ArrayList<>();
+        List<Booking> listBooking = new ArrayList<>();
         User owner = getUser(ownerId);
         if (BookingStatus.from(status) == null) {
             throw new ValidatetionConflict("Некорректный статус Booking");
         }
-        BookingStatus   bookingStatus = BookingStatus.from(status);
+        BookingStatus bookingStatus = BookingStatus.from(status);
         switch (bookingStatus) {
             case BookingStatus.ALL:
                 listBooking = bookingRepository.findByItemOwner(owner, NEWEST_FIRST);
@@ -159,6 +159,7 @@ public class BaseBookingService implements BookingService {
                 .map(BookingMapper::toOutputBookingDto)
                 .toList();
     }
+
     private User getUser(long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь с id: не найден:" + userId));
@@ -169,9 +170,10 @@ public class BaseBookingService implements BookingService {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item  с id: не найден: " + itemId));
     }
+
     private Booking getBooking(long bookingId) {
         return bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking с id: не найден: " + bookingId));
     }
-
 }
+

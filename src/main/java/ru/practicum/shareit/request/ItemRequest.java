@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import ru.practicum.shareit.user.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
