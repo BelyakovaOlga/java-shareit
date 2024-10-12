@@ -1,9 +1,12 @@
 package ru.practicum.shareit.item;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
+import ru.practicum.shareit.item.dto.CommentInfoDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.services.ItemService;
 
@@ -18,9 +21,9 @@ public class ItemController {
     static final String userParmHeader = "X-Sharer-User-Id";
 
     @GetMapping("/{id}")
-    public ItemDto get(@PathVariable long id) {
+    public ItemDto get(@RequestHeader(userParmHeader) long userId, @PathVariable long id) {
         log.info("==>Получение Item по id: {}", id);
-        ItemDto itemDto = service.findById(id);
+        ItemDto itemDto = service.findById(id, userId);
         log.info("<==Возврат Item: {}", itemDto);
         return itemDto;
     }
@@ -46,7 +49,7 @@ public class ItemController {
                           @RequestBody @Valid ItemDto itemDto) {
         log.info("==>Создание Item: {} с владельцем {}", itemDto, userId);
         ItemDto newItemDto = service.create(itemDto, userId);
-        log.info("<==Создан Item: {} с владельцем {}", itemDto, userId);
+        log.info("<==Создан Item: {} с владельцем {}", newItemDto, userId);
         return newItemDto;
     }
 
@@ -55,7 +58,8 @@ public class ItemController {
                           @PathVariable long itemId,
                           @RequestBody ItemDto itemDto) {
         log.info("==>Обновление Item: {} владельца {}", itemDto, userId);
-        ItemDto updItemDto = service.update(itemId, itemDto, userId);
+        itemDto.setId(itemId);
+        ItemDto updItemDto = service.update(itemDto, userId);
         log.info("<==Обновлен Item: {} владельца {}", itemDto, userId);
         return updItemDto;
     }
@@ -66,5 +70,16 @@ public class ItemController {
         service.delete(id);
         log.info("<==Успешно удален Item по: {}", id);
     }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentDto createComment(@NotNull @RequestHeader(userParmHeader) long userId,
+                                    @PathVariable long itemId,
+                                    @RequestBody @Valid CommentInfoDto commentInfoDto) {
+        log.info("==>Создание коментария к Item по: {}", itemId);
+        CommentDto commentDto = service.createComment(itemId, userId, commentInfoDto);
+        log.info("==>Создан коментарий к Item по: {}", itemId);
+        return commentDto;
+    }
 }
+
 
