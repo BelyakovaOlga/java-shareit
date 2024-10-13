@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDto {
     Long id;
     @NotBlank(message = "Наименование должен быть указано")

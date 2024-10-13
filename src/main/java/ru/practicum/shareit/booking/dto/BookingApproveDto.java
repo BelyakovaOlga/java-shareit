@@ -9,7 +9,7 @@ import ru.practicum.shareit.item.model.Item;
 
 @Builder
 @Data
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingApproveDto {
     @NotNull
     Long id;

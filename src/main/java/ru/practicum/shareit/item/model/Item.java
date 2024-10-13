@@ -15,7 +15,7 @@ import ru.practicum.shareit.user.User;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "items", schema = "public")
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

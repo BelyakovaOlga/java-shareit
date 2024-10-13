@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemDto {
     Long id;
     @NotBlank(message = "Наименование должен быть указано")
