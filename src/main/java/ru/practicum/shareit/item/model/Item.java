@@ -3,6 +3,7 @@ package ru.practicum.shareit.item.model;
 import jakarta.persistence.*;
 import jdk.jfr.BooleanFlag;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
@@ -14,22 +15,23 @@ import ru.practicum.shareit.user.User;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "items", schema = "public")
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    User owner;
     @Column(name = "NAME", length = 200, nullable = false)
-    private String name;
+    String name;
     @Column(length = 100, nullable = false)
-    private String description;
+    String description;
     @BooleanFlag
     @Column(name = "available", nullable = false)
-    private Boolean available;
+    Boolean available;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id")
-    private ItemRequest request;
+    ItemRequest request;
 }
 

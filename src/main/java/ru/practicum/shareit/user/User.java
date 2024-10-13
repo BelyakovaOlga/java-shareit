@@ -2,6 +2,7 @@ package ru.practicum.shareit.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Getter
@@ -9,12 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users", schema = "public")
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
     @Column(nullable = false)
-    private String name;
+    String name;
     @Column(nullable = false, unique = true)
-    private String email;
+    String email;
 }

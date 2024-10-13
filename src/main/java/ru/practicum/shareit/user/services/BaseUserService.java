@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class BaseUserService implements UserService {
     private final UserRepository userRepository;
 
@@ -40,6 +39,7 @@ public class BaseUserService implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDto findById(long id) {
         return UserMapper.toUserDto(getUser(id));
     }
@@ -51,6 +51,7 @@ public class BaseUserService implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDto> getAll() {
         return userRepository.findAll().stream()
                 .map(UserMapper::toUserDto)

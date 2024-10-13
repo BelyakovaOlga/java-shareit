@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.BookingStatus;
@@ -31,12 +32,14 @@ public class BaseBookingService implements BookingService {
     private static final Sort NEWEST_FIRST = Sort.by(Sort.Direction.DESC, "start");
 
     @Override
+    @Transactional
     public void delete(long id) {
         Booking booking = getBooking(id);
         bookingRepository.delete(booking);
     }
 
     @Override
+    @Transactional
     public OutputBookingDto create(BookingDto bookingDto, long bookerId) {
         User booker = getUser(bookerId);
         Item item = getItem(bookingDto.getItemId());
@@ -63,6 +66,7 @@ public class BaseBookingService implements BookingService {
     }
 
     @Override
+    @Transactional
     public OutputBookingDto approve(BookingApproveDto bookingApproveDto, long id) {
         Booking booking = getBooking(bookingApproveDto.getId());
         Item item = booking.getItem();
@@ -83,6 +87,7 @@ public class BaseBookingService implements BookingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public OutputBookingDto findById(long bookingId, long userId) {
         Booking booking = getBooking(bookingId);
         OutputBookingDto bookingDto;
@@ -96,6 +101,7 @@ public class BaseBookingService implements BookingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<OutputBookingDto> findByBookerId(long bookerId, String status) {
         List<Booking> listBooking = new ArrayList<>();
         User booker = getUser(bookerId);
@@ -129,6 +135,7 @@ public class BaseBookingService implements BookingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<OutputBookingDto> findByOwnerId(long ownerId, String status) {
         List<Booking> listBooking = new ArrayList<>();
         User owner = getUser(ownerId);

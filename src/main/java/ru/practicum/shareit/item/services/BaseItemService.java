@@ -1,9 +1,9 @@
 package ru.practicum.shareit.item.services;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.BookingStatus;
@@ -37,6 +37,7 @@ public class BaseItemService implements  ItemService {
     private final CommentRepository commentRepository;
 
     @Override
+    @Transactional
     public ItemDto create(ItemDto newItemDto, long ownerId) {
         User owner = getUser(ownerId);
         Item item = ItemMapper.toItem(newItemDto);
@@ -45,6 +46,7 @@ public class BaseItemService implements  ItemService {
     }
 
     @Override
+    @Transactional
     public ItemDto update(ItemDto itemUpd, long ownerId) {
         User owner = getUser(ownerId);
         Item oldItem = getItem(itemUpd.getId());
@@ -65,11 +67,13 @@ public class BaseItemService implements  ItemService {
     }
 
     @Override
+    @Transactional
     public void delete(long itemId) {
         itemRepository.delete(itemRepository.findById(itemId).get());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ItemDto findById(long itemId, long userId) {
         Item item = getItem(itemId);
         ItemDto itemDto = ItemMapper.toItemDto(item);
@@ -84,6 +88,7 @@ public class BaseItemService implements  ItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ItemDto> findByOwner(long ownerId) {
         User owner = getUser(ownerId);
         userRepository.findById(ownerId);
@@ -102,6 +107,7 @@ public class BaseItemService implements  ItemService {
     }
 
     @Override
+    @Transactional
     public Collection<ItemDto> findBySearch(String text) {
 
         return itemRepository.searchByNameOrDescription(text)

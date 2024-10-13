@@ -1,9 +1,7 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +9,11 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class CommentDto {
-    private Long id;
-    private Long itemId;
-    private String text;
-    private String authorName;
-    private LocalDateTime created;
+    Long id;
+    Long itemId;
+    String text;
+    String authorName;
+    LocalDateTime created;
 }
