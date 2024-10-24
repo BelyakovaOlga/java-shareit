@@ -1,17 +1,22 @@
 package ru.practicum.shareit.user;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users", schema = "public")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
-    private Long id;
-    @NotBlank(message = "Наименование должен быть указано")
-    private String name;
-    @Email(message = "User's email has wrong format")
-    @NotBlank(message = "User's email missing")
-    private String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @Column(nullable = false)
+    String name;
+    @Column(nullable = false, unique = true)
+    String email;
 }

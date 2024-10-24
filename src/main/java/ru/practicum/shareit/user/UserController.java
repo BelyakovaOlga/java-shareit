@@ -14,7 +14,6 @@ import ru.practicum.shareit.user.services.UserService;
 public class UserController {
     private final UserService service;
 
-
     @GetMapping("/{id}")
     public UserDto get(@PathVariable long id) {
         log.info("Запрос User по id: {}", id);
@@ -34,7 +33,8 @@ public class UserController {
     @PatchMapping("/{id}")
     public UserDto update(@PathVariable long id, @RequestBody UserDto userDto) {
         log.info("==>Обновление User: {}", userDto);
-        UserDto userUpdDto = service.update(id, userDto);
+        userDto.setId(id);
+        UserDto userUpdDto = service.update(userDto);
         log.info("<==Обновление User: {}", userDto);
         return userUpdDto;
     }
@@ -46,4 +46,5 @@ public class UserController {
         log.info("<==Успешно удален");
     }
 }
+
 

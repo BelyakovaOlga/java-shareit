@@ -1,22 +1,18 @@
 package ru.practicum.shareit.booking.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.booking.BookingStatus;
-
-import java.time.LocalDateTime;
+import ru.practicum.shareit.item.model.Item;
 
 @Builder
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingDto {
+public class BookingApproveDto {
+    @NotNull
     Long id;
-    LocalDateTime start;
-    LocalDateTime end;
-    Long itemId;
-    Long booker;
-    BookingStatus status;
+    Item item;
+    Boolean approved;
 }
-
