@@ -31,7 +31,7 @@ public class ItemClient extends BaseClient {
     }
 
     public ResponseEntity<Object> update(ItemDto itemDto, long userId) {
-        return patch("" ,userId, itemDto);
+        return patch("", userId, itemDto);
     }
 
     public void delete(long itemId) {
