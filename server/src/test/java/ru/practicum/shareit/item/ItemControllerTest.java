@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @WebMvcTest(ItemController.class)
 @AutoConfigureMockMvc
 class ItemControllerTest {
@@ -46,6 +47,7 @@ class ItemControllerTest {
                     null, null, null),
             new ItemDto(2L, "Name2", "Description2", true, null,
                     null, null, null));
+
     public CommentDto getCommentDto() {
         return CommentDto.builder()
                 .id(1L)

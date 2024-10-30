@@ -26,8 +26,7 @@ public class BookingController {
     public OutputBookingDto create(@RequestHeader(userParmHeader) long userId,
                                    @RequestBody BookingDto bookingDto) {
         log.info("==>Создание Booking: ", bookingDto);
-       // User booker = UserMapper.toUser(userService.findById(userId));
-       // bookingDto.setBooker(booker.getId());
+
         OutputBookingDto bookingDtoNew = bookingService.create(bookingDto, userId);
         log.info("<==Создан Booking ");
         return bookingDtoNew;

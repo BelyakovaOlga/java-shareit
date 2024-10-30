@@ -1,6 +1,5 @@
 package ru.practicum.shareit.booking.dto;
 
-import static org.junit.jupiter.api.Assertions.*;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

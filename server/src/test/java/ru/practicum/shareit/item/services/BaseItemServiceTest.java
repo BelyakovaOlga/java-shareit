@@ -90,6 +90,7 @@ class BaseItemServiceTest {
 
         assertEquals(commentCreatedDto,commentDto);
     }
+
     @Test
     void createCommentIfBookingNotFinishTest() {
 
@@ -101,6 +102,7 @@ class BaseItemServiceTest {
 
         assertThrows(ValidationException.class, () -> {service.createComment(4L,3L, CommentNewDto);},"Нет сообщения: Бронирование вещи не завершено");
     }
+
     @Test
     void createCommentIfBookingNotExistTest() {
 

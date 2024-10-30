@@ -43,6 +43,7 @@ public class ItemMapper {
                 .build();
 
     }
+
     public static List<ItemForRequestDto> toItemsDtoForRequest(Collection<Item> items) {
         return items.stream()
                 .map(ItemMapper::toItemForRequestDto)

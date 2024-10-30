@@ -53,6 +53,7 @@ class ItemRequestControllerTest
                 .items(List.of())
                 .build();
     }
+
     public ItemRequestDto getItemRequestDto() {
         return ItemRequestDto.builder()
                 .id(1L)
@@ -60,6 +61,7 @@ class ItemRequestControllerTest
                 .created(LocalDateTime.now())
                 .build();
     }
+
     @Test
     void create() throws Exception {
         ItemRequestDto itemRequestDto = getItemRequestDto();

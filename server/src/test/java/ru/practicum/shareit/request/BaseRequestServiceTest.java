@@ -50,11 +50,13 @@ class BaseRequestServiceTest {
     void findItemRequestNotFoundTest() {
        assertThrows(NotFoundException.class, () -> {service.findItemRequestById(requestId,userRequestorNotValid);}, "Нет сообения что: Request не найден.");
     }
+
     @Test
     void findfindAllByUserIdTest() {
         ItemRequestInfoDto itemRequestCreatedDto = createRequest(userRequestor);
         assertEquals(service.findAllByUserId(userRequestor).size(), 1);
     }
+
     @Test
     void findAllUsersItemRequestTest () {
         ItemRequestInfoDto itemRequestCreatedDto = createRequest(userRequestor);

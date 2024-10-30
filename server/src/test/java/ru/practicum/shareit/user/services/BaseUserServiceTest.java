@@ -19,6 +19,7 @@ class BaseUserServiceTest {
     UserDto userDtoNew = new UserDto(101L, "Ирина", "user101@mail.ru");
     Long    userExistInbase = 2L;
     Long    qtyExistsUsrUnBase = 4L;
+
     @Test
     void findByIdTest() {
         UserDto userDtoFind = service.findById(userExistInbase);
@@ -29,6 +30,7 @@ class BaseUserServiceTest {
         UserDto userDtoCreate = service.create(userDtoNew);
         assertEquals(userDtoCreate,service.findById(userDtoCreate.getId()));
     }
+
     @Test
     void userUpdateTest() {
         UserDto userDtoCreate = service.create(userDtoNew);
@@ -42,6 +44,7 @@ class BaseUserServiceTest {
         service.delete(userExistInbase);
         assertThrows(NotFoundException.class, () -> {service.findById(userExistInbase);}, "Сообщения что запись не найдена нет");
     }
+
     @Test
     void getAllTest() {
         assertEquals(service.getAll().size(), qtyExistsUsrUnBase);

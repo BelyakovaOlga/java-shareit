@@ -33,7 +33,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @WebMvcTest(controllers = BookingController.class)
 @AutoConfigureMockMvc
 class BookingControllerTest {
@@ -54,6 +53,7 @@ class BookingControllerTest {
                 .end(LocalDateTime.now().plusHours(1))
                 .build();
     }
+
     public OutputBookingDto getOutputBookingDto() {
         User user = new User(1L, "user", "user@mail.ru");
         User owner = new User(2L, "owner", "owner@mail.ru");
@@ -71,6 +71,7 @@ class BookingControllerTest {
                 .build();
 
     }
+
     @Test
     void createTest() throws Exception {
         BookingDto bookingDto = getBookingDto();
@@ -90,6 +91,7 @@ class BookingControllerTest {
 
         verify(bookingService).create(bookingDto, 1L);
     }
+
     @Test
     void approveTest() throws Exception {
         BookingDto bookingDto = getBookingDto();
