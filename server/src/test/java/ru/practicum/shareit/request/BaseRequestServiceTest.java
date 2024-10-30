@@ -37,18 +37,22 @@ class BaseRequestServiceTest {
     void createItemRequestTest() {
 
         ItemRequestInfoDto itemRequestCreatedDto = createRequest(userRequestor);
-        ItemRequestInfoDto itemRequestFindDto = service.findItemRequestById(itemRequestCreatedDto.getId(),itemRequestCreatedDto.getRequestor().getId());
+        ItemRequestInfoDto itemRequestFindDto = service.findItemRequestById(itemRequestCreatedDto.getId(), itemRequestCreatedDto.getRequestor().getId());
         assertEquals(itemRequestCreatedDto, itemRequestFindDto);
     }
 
     @Test
     void createItemRequestNotValidUserTest() {
-        assertThrows(NotFoundException.class, () -> {createRequest(userRequestorNotExist);},"Нет сообения что: User не найден.");
+        assertThrows(NotFoundException.class, () -> {
+            createRequest(userRequestorNotExist);
+        }, "Нет сообения что: User не найден.");
     }
 
     @Test
     void findItemRequestNotFoundTest() {
-       assertThrows(NotFoundException.class, () -> {service.findItemRequestById(requestId,userRequestorNotValid);}, "Нет сообения что: Request не найден.");
+        assertThrows(NotFoundException.class, () -> {
+            service.findItemRequestById(requestId, userRequestorNotValid);
+        }, "Нет сообения что: Request не найден.");
     }
 
     @Test
@@ -58,8 +62,9 @@ class BaseRequestServiceTest {
     }
 
     @Test
-    void findAllUsersItemRequestTest () {
+    void findAllUsersItemRequestTest() {
         ItemRequestInfoDto itemRequestCreatedDto = createRequest(userRequestor);
         assertEquals(service.findAllUsersItemRequest().size(), 1);
     }
 }
+

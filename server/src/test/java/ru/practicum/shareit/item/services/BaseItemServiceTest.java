@@ -84,10 +84,10 @@ class BaseItemServiceTest {
                 .text("Отличный спальный мешок")
                 .authorName("Алена")
                 .build();
-        CommentInfoDto CommentNewDto = CommentInfoDto.builder()
+        CommentInfoDto commentNewDto = CommentInfoDto.builder()
                 .text("Отличный спальный мешок")
                 .build();
-        CommentDto commentCreatedDto = service.createComment(itemId1, userId2, CommentNewDto);
+        CommentDto commentCreatedDto = service.createComment(itemId1, userId2, commentNewDto);
         commentDto.setId(commentCreatedDto.getId());
         commentDto.setCreated(commentCreatedDto.getCreated());
 
@@ -97,28 +97,28 @@ class BaseItemServiceTest {
     @Test
     void createCommentIfBookingNotFinishTest() {
 
-        CommentInfoDto CommentNewDto = CommentInfoDto.builder()
+        CommentInfoDto commentNewDto = CommentInfoDto.builder()
                 .itemId(4L)
                 .text("Отличный санки")
                 .authorId(3L)
                 .build();
 
         assertThrows(ValidationException.class, () -> {
-            service.createComment(4L, 3L, CommentNewDto);
+            service.createComment(4L, 3L, commentNewDto);
         }, "Нет сообщения: Бронирование вещи не завершено");
     }
 
     @Test
     void createCommentIfBookingNotExistTest() {
 
-        CommentInfoDto CommentNewDto = CommentInfoDto.builder()
+        CommentInfoDto commentNewDto = CommentInfoDto.builder()
                 .itemId(101L)
                 .text("Отличный санки")
                 .authorId(3L)
                 .build();
 
         assertThrows(ValidationException.class, () -> {
-            service.createComment(4L, 3L, CommentNewDto);
+            service.createComment(4L, 3L, commentNewDto);
         }, "Нет сообщения: Бронирование вещи не найдено");
     }
 

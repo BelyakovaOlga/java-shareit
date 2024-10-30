@@ -17,18 +17,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BaseUserServiceTest {
     private final BaseUserService service;
     UserDto userDtoNew = new UserDto(101L, "Ирина", "user101@mail.ru");
-    Long    userExistInbase = 2L;
-    Long    qtyExistsUsrUnBase = 4L;
+    Long userExistInbase = 2L;
+    Long qtyExistsUsrUnBase = 4L;
 
     @Test
     void findByIdTest() {
         UserDto userDtoFind = service.findById(userExistInbase);
         assertEquals(userDtoFind.getId(), userExistInbase);
     }
+
     @Test
     void userCreateTest() {
         UserDto userDtoCreate = service.create(userDtoNew);
-        assertEquals(userDtoCreate,service.findById(userDtoCreate.getId()));
+        assertEquals(userDtoCreate, service.findById(userDtoCreate.getId()));
     }
 
     @Test
@@ -42,11 +43,14 @@ class BaseUserServiceTest {
     @Test
     void deleteItemTest() {
         service.delete(userExistInbase);
-        assertThrows(NotFoundException.class, () -> {service.findById(userExistInbase);}, "Сообщения что запись не найдена нет");
+        assertThrows(NotFoundException.class, () -> {
+            service.findById(userExistInbase);
+        }, "Сообщения что запись не найдена нет");
     }
 
     @Test
     void getAllTest() {
+
         assertEquals(service.getAll().size(), qtyExistsUsrUnBase);
     }
 
