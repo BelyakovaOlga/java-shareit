@@ -14,7 +14,6 @@ import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class BaseRequestService implements ItemRequestService {
     private final ItemRequestRepository itemRequestRepository;
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
+
     @Override
     public List<ItemRequestInfoDto> findAllByUserId(Long userId) {
         return RequestMapper.toItemRequestDtoList(itemRequestRepository.findAllByRequestorId(userId));

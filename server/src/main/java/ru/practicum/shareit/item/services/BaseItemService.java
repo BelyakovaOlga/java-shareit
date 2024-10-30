@@ -170,6 +170,7 @@ public class BaseItemService implements  ItemService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь с id: не найден: " + userId));
     }
+
     private ItemRequest getRequest(long requestId) {
         return itemRequestRepository.findById(requestId)
                 .orElseThrow(() -> new NotFoundException("Запрос на вещь с id: не найден: " + requestId));
