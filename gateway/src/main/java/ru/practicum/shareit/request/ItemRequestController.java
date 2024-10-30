@@ -1,7 +1,5 @@
 package ru.practicum.shareit.request;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.shareit.request.ItemRequestDto;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,6 +22,7 @@ public class ItemRequestController {
                                          @Valid @RequestBody ItemRequestDto itemRequestRequestDto) {
         return itemRequestClient.create(userId, itemRequestRequestDto);
     }
+
     @GetMapping
     public ResponseEntity<Object> findAll(@RequestHeader(userParmHeader) Long userId) {
         return itemRequestClient.findAll(userId);
@@ -42,3 +39,4 @@ public class ItemRequestController {
         return itemRequestClient.findAllUsersItemRequest();
     }
 }
+

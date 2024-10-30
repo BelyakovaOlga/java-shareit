@@ -22,6 +22,7 @@ public class UserClient extends BaseClient {
                 .build()
         );
     }
+
     public ResponseEntity<Object> getUser(long userId) {
         return get("/" + userId);
     }
@@ -34,6 +35,7 @@ public class UserClient extends BaseClient {
     public ResponseEntity<Object> update(UserValidDto userDto) {
         return patch("/" + userDto.getId(), userDto);
     }
+
     public void delete(long userId) {
         delete("/" + userId);
     }

@@ -24,10 +24,12 @@ public class ItemClient extends BaseClient {
                         .build()
         );
     }
+
     public ResponseEntity<Object> create(long userId, ItemDto itemDto) {
 
         return post("", userId, itemDto);
     }
+
     public ResponseEntity<Object> update(ItemDto itemDto, long userId) {
         return patch("" ,userId, itemDto);
     }
@@ -35,9 +37,11 @@ public class ItemClient extends BaseClient {
     public void delete(long itemId) {
             delete("/" + itemId);
     }
+
     public ResponseEntity<Object> getByOwnerId(long ownerId) {
         return get("", ownerId);
     }
+
     public ResponseEntity<Object> getItem(long itemId, long userId) {
         return get("/" + itemId, userId);
     }
@@ -45,7 +49,6 @@ public class ItemClient extends BaseClient {
     public ResponseEntity<Object> findBySearch(String text) {
         return get("/search?text=" + text);
     }
-
 
     public ResponseEntity<Object> addComment(long userId, Long itemId, CommentRequestDto commentRequestDto) {
         return post("/" + itemId + "/comment", userId, commentRequestDto);

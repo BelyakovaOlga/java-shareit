@@ -1,7 +1,5 @@
 package ru.practicum.shareit.booking;
 
-import ru.practicum.shareit.booking.dto.BookingState;
-
 import java.util.Optional;
 
 public enum BookingStatus {
