@@ -69,7 +69,7 @@ class ItemControllerTest {
 
 
     @Test
-    void FindByIdTest() throws Exception {
+    void findByIdTest() throws Exception {
         ItemDto itemDto = getItemDto();
         when(itemService.findById(anyLong(),anyLong()))
                 .thenReturn(itemDto);
