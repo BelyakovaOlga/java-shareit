@@ -14,9 +14,9 @@ import java.util.List;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRequestInfoDto {
-    private Long id;
-    private String description;
-    private UserDto requestor;
-    private LocalDateTime created;
-    private List<ItemForRequestDto> items;
+    Long id;
+    String description;
+    UserDto requestor;
+    LocalDateTime created;
+    List<ItemForRequestDto> items;
 }

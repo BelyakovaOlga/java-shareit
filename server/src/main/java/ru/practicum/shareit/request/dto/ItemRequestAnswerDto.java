@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRequestAnswerDto {
-    private String description;
-    private LocalDateTime created;
-    private List<ItemDto> items;
+    String description;
+    LocalDateTime created;
+    List<ItemDto> items;
 }
